@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnClick(View v) {
-        Toast.makeText(getBaseContext(), "Button clicked", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Mic started", Toast.LENGTH_LONG).show();
         startMic();
 
     }
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
             mediaReco.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
             String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
             mFileName += "/audiorecordtest" + System.currentTimeMillis() + ".3gp";
+            File file = new File(mFileName);
+            file.createNewFile();
             mediaReco.setOutputFile(mFileName);
             mediaReco.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mediaReco.prepare();
@@ -42,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void stopMic() {
+    public void stopMic(View v) {
         mediaReco.stop();
         mediaReco.release();
+        Toast.makeText(getBaseContext(), "Mic stopped", Toast.LENGTH_LONG).show();
     }
 }
